@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Update Status Transaksi</h2>
+<form method="post">
+  <p><strong>Nama Pelanggan:</strong> {{ data[1] }}</p>
+  <p><strong>No HP:</strong> {{ data[2] }}</p>
+  <p><strong>Layanan:</strong> {{ data[3] }}</p>
+  <p><strong>Total:</strong> Rp {{ data[7] }}</p>
+
+  <label>Status Pembayaran:</label><br>
+  <select name="status_pembayaran">
+    <option value="Belum Lunas" {% if data[8] == 'Belum Lunas' %}selected{% endif %}>Belum Lunas</option>
+    <option value="Lunas" {% if data[8] == 'Lunas' %}selected{% endif %}>Lunas</option>
+  </select><br><br>
+
+  <label>Status Pengambilan:</label><br>
+  <select name="status_pengambilan">
+    <option value="Belum Diambil" {% if data[9] == 'Belum Diambil' %}selected{% endif %}>Belum Diambil</option>
+    <option value="Sudah Diambil" {% if data[9] == 'Sudah Diambil' %}selected{% endif %}>Sudah Diambil</option>
+  </select><br><br>
+
+  <button type="submit">Simpan Perubahan</button>
+</form>
+{% endblock %}
