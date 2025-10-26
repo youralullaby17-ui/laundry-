@@ -68,12 +68,18 @@ def transaksi_update(id):
         status_ambil = request.form['status_pengambilan']
         tanggal_bayar = datetime.now().strftime('%Y-%m-%d %H:%M:%S') if status_bayar == 'Lunas' else None
         tanggal_ambil = datetime.now().strftime('%Y-%m-%d %H:%M:%S') if status_ambil == 'Sudah Diambil' else None
-        c.execute("""UPDATE transaksi SET status_pembayaran=?, status_pengambilan=?, 
-                     tanggal_pembayaran=?, tanggal_pengambilan=? WHERE id=?""",
+
+        c.execute("""UPDATE transaksi SET 
+                     status_pembayaran=?, 
+                     status_pengambilan=?, 
+                     tanggal_pembayaran=?, 
+                     tanggal_pengambilan=? 
+                     WHERE id=?""",
                   (status_bayar, status_ambil, tanggal_bayar, tanggal_ambil, id))
         conn.commit()
         conn.close()
         return redirect(url_for('transaksi_list'))
+
     c.execute("SELECT * FROM transaksi WHERE id=?", (id,))
     data = c.fetchone()
     conn.close()
@@ -90,3 +96,4 @@ def laporan():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
