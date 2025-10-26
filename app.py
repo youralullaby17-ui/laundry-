@@ -11,12 +11,34 @@ def koneksi():
 def dashboard():
     conn = koneksi()
     c = conn.cursor()
+
     c.execute("SELECT COUNT(*) FROM transaksi")
     total_transaksi = c.fetchone()[0]
+
     c.execute("SELECT SUM(total) FROM transaksi WHERE status_pembayaran='Lunas'")
     total_pemasukan = c.fetchone()[0] or 0
+
+    c.execute("SELECT SUM(kasbon) FROM transaksi")
+    total_kasbon = c.fetchone()[0] or 0
+
+    c.execute("SELECT COUNT(*) FROM transaksi WHERE status_pengambilan='Belum Diambil'")
+    belum_diambil = c.fetchone()[0]
+
+    c.execute("SELECT COUNT(*) FROM transaksi WHERE status_pembayaran='Lunas'")
+    lunas = c.fetchone()[0]
+    c.execute("SELECT COUNT(*) FROM transaksi WHERE status_pembayaran='Belum Lunas'")
+    belum = c.fetchone()[0]
+
     conn.close()
-    return render_template('dashboard.html', total_transaksi=total_transaksi, total_pemasukan=total_pemasukan)
+
+    status_data = [lunas, belum]
+
+    return render_template('dashboard.html',
+                           total_transaksi=total_transaksi,
+                           total_pemasukan=total_pemasukan,
+                           total_kasbon=total_kasbon,
+                           belum_diambil=belum_diambil,
+                           status_data=status_data)
 
 @app.route('/transaksi')
 def transaksi_list():
@@ -100,5 +122,6 @@ def laporan():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
