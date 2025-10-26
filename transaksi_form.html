@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Form Transaksi Laundry</h2>
+<form method="post">
+  <label>Nama Pelanggan:</label><br>
+  <input type="text" name="nama" required><br><br>
+
+  <label>Nomor Pelanggan (HP):</label><br>
+  <input type="text" name="no" required><br><br>
+
+  <label>Layanan:</label><br>
+  <select name="layanan">
+    <option value="Cuci Kering">Cuci Kering</option>
+    <option value="Cuci Setrika">Cuci Setrika</option>
+    <option value="Setrika Saja">Setrika Saja</option>
+  </select><br><br>
+
+  <label>Berat Cucian (kg):</label><br>
+  <input type="number" name="berat" step="0.1" required><br><br>
+
+  <label>Diskon (%):</label><br>
+  <input type="number" name="diskon" step="1" value="0"><br><br>
+
+  <label>Kasbon (Rp):</label><br>
+  <input type="number" name="kasbon" step="100" value="0"><br><br>
+
+  <button type="submit">Simpan Transaksi</button>
+</form>
+{% endblock %}
+
