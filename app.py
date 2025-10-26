@@ -1,3 +1,6 @@
+from flask import Flask, render_template, request, redirect, url_for, session
+app = Flask(__name__)
+app.secret_key = 'rahasia_login_admin'  # ganti dengan secret key yang aman
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
 import sqlite3
@@ -9,6 +12,8 @@ def koneksi():
 
 @app.route('/')
 def dashboard():
+    if 'admin' not in session:
+        return redirect(url_for('login'))
     conn = koneksi()
     c = conn.cursor()
 
@@ -42,6 +47,8 @@ def dashboard():
 
 @app.route('/transaksi')
 def transaksi_list():
+    if 'admin' not in session:
+        return redirect(url_for('login'))
     conn = koneksi()
     c = conn.cursor()
     c.execute("SELECT * FROM transaksi ORDER BY id DESC")
@@ -51,6 +58,8 @@ def transaksi_list():
 
 @app.route('/transaksi/form', methods=['GET', 'POST'])
 def transaksi_form():
+    if 'admin' not in session:
+        return redirect(url_for('login'))
     if request.method == 'POST':
         nama = request.form['nama']
         no = request.form['no']
@@ -83,6 +92,8 @@ def transaksi_form():
 
 @app.route('/transaksi/update/<int:id>', methods=['GET', 'POST'])
 def transaksi_update(id):
+    if 'admin' not in session:
+        return redirect(url_for('login'))
     conn = koneksi()
     c = conn.cursor()
     if request.method == 'POST':
@@ -109,6 +120,8 @@ def transaksi_update(id):
 
 @app.route('/laporan')
 def laporan():
+    if 'admin' not in session:
+        return redirect(url_for('login'))
     conn = koneksi()
     c = conn.cursor()
     c.execute("SELECT tanggal_pemesanan, SUM(total) FROM transaksi GROUP BY tanggal_pemesanan ORDER BY tanggal_pemesanan")
@@ -120,8 +133,30 @@ def laporan():
 
     return render_template('laporan.html', labels=labels, data=data)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if 'admin' not in session:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == 'admin' and password == 'admin123':
+            session['admin'] = True
+            return redirect(url_for('dashboard'))
+        else:
+            return render_template('login.html', error='Username atau password salah')
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    if 'admin' not in session:
+        return redirect(url_for('login'))
+    session.pop('admin', None)
+    return redirect(url_for('login'))
+
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
 
