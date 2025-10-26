@@ -1,51 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Dashboard Laundry</title>
-  <style>
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .card {
-      background-color: #e3f2fd;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-  </style>
-</head>
-
-</html>
-
 {% extends 'base.html' %}
 {% block content %}
-<h2>Dashboard Laundry</h2>
+<h2 style="text-align:center;">📊 Dashboard Laundry</h2>
 
 <div class="dashboard-grid">
-  <div class="card">
-    <h3>Total Transaksi</h3>
+  <div class="card card-transaksi">
+    <h3>🧾 Total Transaksi</h3>
     <p>{{ total_transaksi }}</p>
   </div>
-  <div class="card">
-    <h3>Total Pemasukan</h3>
+  <div class="card card-pemasukan">
+    <h3>💰 Total Pemasukan</h3>
     <p>Rp {{ total_pemasukan }}</p>
   </div>
-  <div class="card">
-    <h3>Total Kasbon</h3>
+  <div class="card card-kasbon">
+    <h3>📉 Total Kasbon</h3>
     <p>Rp {{ total_kasbon }}</p>
   </div>
-  <div class="card">
-    <h3>Belum Diambil</h3>
+  <div class="card card-belum">
+    <h3>🧺 Belum Diambil</h3>
     <p>{{ belum_diambil }}</p>
   </div>
 </div>
 
+<h3 style="text-align:center;">📈 Status Pembayaran</h3>
 <canvas id="grafikDashboard" width="600" height="300"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
