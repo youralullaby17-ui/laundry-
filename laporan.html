@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Laporan Harian Laundry</h2>
+
 <canvas id="grafikLaporan" width="600" height="300"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -27,4 +28,6 @@
     }
   });
 </script>
+<a href="/laporan/excel">📥 Export Excel</a> |
+<a href="/laporan/pdf">📥 Export PDF</a>
 {% endblock %}
