@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Transaksi Laundry</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th {
+      background-color: #333;
+      color: white;
+    }
+
+    td, th {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Daftar Transaksi Laundry</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Nama</th>
+      <th>Layanan</th>
+      <th>Total</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Rina</td>
+      <td>Cuci Kering</td>
+      <td>Rp 35.000</td>
+      <td>Belum Lunas</td>
+    </tr>
+    <!-- Tambahkan baris lainnya di sini -->
+  </table>
+</body>
+</html>
+
+<h2>Daftar Transaksi Laundry</h2>
+<table border="1" cellpadding="8" cellspacing="0">
+  <tr>
+    <th>ID</th>
+    <th>Nama</th>
+    <th>No HP</th>
+    <th>Layanan</th>
+    <th>Berat (kg)</th>
+    <th>Diskon (%)</th>
+    <th>Kasbon (Rp)</th>
+    <th>Total (Rp)</th>
+    <th>Status Bayar</th>
+    <th>Status Ambil</th>
+    <th>Tgl Pesan</th>
+    <th>Tgl Bayar</th>
+    <th>Tgl Ambil</th>
+    <th>Aksi</th>
+  </tr>
+  {% for t in data %}
+  <tr>
+    <td>{{ t[0] }}</td>
+    <td>{{ t[1] }}</td>
+    <td>{{ t[2] }}</td>
+    <td>{{ t[3] }}</td>
+    <td>{{ t[4] }}</td>
+    <td>{{ t[5] }}</td>
+    <td>{{ t[6] }}</td>
+    <td>{{ t[7] }}</td>
+    <td>{{ t[8] }}</td>
+    <td>{{ t[9] }}</td>
+    <td>{{ t[10] }}</td>
+    <td>{{ t[11] or '-' }}</td>
+    <td>{{ t[12] or '-' }}</td>
+    <td><a href="/transaksi/update/{{ t[0] }}">Update</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
