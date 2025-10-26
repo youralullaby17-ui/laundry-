@@ -89,11 +89,16 @@ def transaksi_update(id):
 def laporan():
     conn = koneksi()
     c = conn.cursor()
-    c.execute("SELECT tanggal_pemesanan, SUM(total) FROM transaksi GROUP BY tanggal_pemesanan")
-    data = c.fetchall()
+    c.execute("SELECT tanggal_pemesanan, SUM(total) FROM transaksi GROUP BY tanggal_pemesanan ORDER BY tanggal_pemesanan")
+    hasil = c.fetchall()
     conn.close()
-    return render_template('laporan.html', data=data)
+
+    labels = [row[0][:10] for row in hasil]  # ambil tanggal saja
+    data = [row[1] for row in hasil]
+
+    return render_template('laporan.html', labels=labels, data=data)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
