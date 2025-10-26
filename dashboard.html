@@ -1,6 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Laundry</title>
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background-color: #e3f2fd;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>Dashboard Laundry</h2>
+  <div class="dashboard-grid">
+    <div class="card">
+      <h3>Total Transaksi</h3>
+      <p>120</p>
+    </div>
+    <div class="card">
+      <h3>Total Pemasukan</h3>
+      <p>Rp 3.500.000</p>
+    </div>
+    <div class="card">
+      <h3>Total Kasbon</h3>
+      <p>Rp 250.000</p>
+    </div>
+    <div class="card">
+      <h3>Belum Diambil</h3>
+      <p>15</p>
+    </div>
+  </div>
+</body>
+</html>
+
 {% extends 'base.html' %}
 {% block content %}
-<h2>Dashboard</h2>
-<p>Total Transaksi: {{ total_transaksi }}</p>
-<p>Total Pemasukan: Rp {{ total_pemasukan }}</p>
+<h2>Dashboard Laundry</h2>
+
+<div class="dashboard-grid">
+  <div class="card">
+    <h3>Total Transaksi</h3>
+    <p>{{ total_transaksi }}</p>
+  </div>
+  <div class="card">
+    <h3>Total Pemasukan</h3>
+    <p>Rp {{ total_pemasukan }}</p>
+  </div>
+  <div class="card">
+    <h3>Total Kasbon</h3>
+    <p>Rp {{ total_kasbon }}</p>
+  </div>
+  <div class="card">
+    <h3>Belum Diambil</h3>
+    <p>{{ belum_diambil }}</p>
+  </div>
+</div>
+
+<canvas id="grafikDashboard" width="600" height="300"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('grafikDashboard').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Lunas', 'Belum Lunas'],
+      datasets: [{
+        label: 'Status Pembayaran',
+        data: {{ status_data | safe }},
+        backgroundColor: ['#4caf50', '#f44336']
+      }]
+    }
+  });
+</script>
 {% endblock %}
